@@ -1,4 +1,5 @@
-# This file contains data for a hash table that utilizes open addressing and quadratic probing for resolving collisions.
+# Description: This file contains data for a hash table that utilizes open addressing and quadratic probing for resolving collisions.
+
 # There are two classes: one called HashEntry that represents a key, value pair entry into the
 # hash table and HashMap, which represents a DynamicArray that contains HashEntries. The HashMap
 # class contains several methods to interact with the table and its entries, including:
