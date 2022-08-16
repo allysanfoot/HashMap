@@ -85,15 +85,8 @@ class HashMap:
         # get the LinkedList using the given key
         linked_list = self.get_linked_list(key)
 
-        # keep a tracker node
-        curr_node = linked_list.head
-
-        # search LinkedList at index until node with key is found
-        while curr_node is not None:
-            if curr_node.key == key:
-                return curr_node.value
-            curr_node = curr_node.next
-        return
+        # return result
+        return linked_list.contains(key)
 
     def put(self, key: str, value: object) -> None:
         """
@@ -130,10 +123,7 @@ class HashMap:
         # get the LinkedList using the given key
         linked_list = self.get_linked_list(key)
 
-        if linked_list.contains(key) is not None:
-            return True
-        else:
-            return False
+        return True if linked_list.contains(key) is not None else False
 
     def empty_buckets(self) -> int:
         """
@@ -144,7 +134,7 @@ class HashMap:
 
         # loop through the table and count the number of empty buckets encountered
         for index in range(self.capacity):
-            if self.buckets[index].head is None:
+            if self.buckets[index].length() == 0:
                 empty_bucket_count +=1
 
         return empty_bucket_count
@@ -175,12 +165,9 @@ class HashMap:
             self.buckets.append(LinkedList())
 
         # rehash each link into the new buckets
-        for i in range(curr_table.length()):
-            if curr_table[i].length() != 0:
-                curr_node = curr_table[i].head
-                while curr_node is not None:
-                    self.put(curr_node.key, curr_node.value)
-                    curr_node = curr_node.next
+        for index in range(curr_table.length()):
+            for node in curr_table[index]:
+                self.put(node.key, node.value)
 
     def get_keys(self) -> DynamicArray:
         """
@@ -190,12 +177,9 @@ class HashMap:
         keys_array = DynamicArray()
 
         for index in range(self.capacity):
-            linked_list = self.buckets[index]
-            # keep a tracker node
-            curr_node = linked_list.head
-            while curr_node is not None:
-                keys_array.append(curr_node.key)
-                curr_node = curr_node.next
+            # iterate through each node in linked list at bucket
+            for node in self.buckets[index]:
+                keys_array.append(node.key)
 
         return keys_array
 
